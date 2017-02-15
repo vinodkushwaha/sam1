@@ -138,7 +138,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		}
 		return res, nil
 	}
-		if customer_name == "" {
+	if customer_name == "" {
 		res, err := json.Marshal(CustomerTxObjects)
 		if err != nil {
 		return nil, errors.New("Failed to Marshal the required Obj customer_name")
@@ -152,11 +152,12 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		}
 		return res, nil
 	}
+
 	objFound = false
 	// iterate
 	for i := 0; i < length; i++ {
 		obj := CustomerTxObjects[i]
-		if customer_id == obj.CUSTOMER_ID && customer_name == obj.CUSTOMER_NAME && customer_dob == obj.CUSTOMER_DOB {
+		if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) {
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
