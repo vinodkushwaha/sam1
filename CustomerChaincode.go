@@ -73,7 +73,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 	
 	var number_of_docs int
-	number_of_docs = len((args-4)/2)
+	number_of_docs = (len(args)-4)/2
 	
 	var CustomerDocObj []CustomerDoc
 	
@@ -84,7 +84,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 		CustomerDocObj[i].DOCUMENT_STRING = args[5]
 	}
 	
-	CustomerDataObj.CUSTOMER_DOC := CustomerDocObj
+	CustomerDataObj.CUSTOMER_DOC = CustomerDocObj
 	
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
