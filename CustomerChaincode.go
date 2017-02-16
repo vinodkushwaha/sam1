@@ -16,7 +16,7 @@ type CustomerChaincode struct {
 var customerIndexTxStr = "_customerIndexTxStr"
 
 type CustomerDoc struct {
-    NAME string `json:"NAME" string;
+    DOCUMENT_NAME string `json:"DOCUMENT_NAME" string;
 	DOCUMENT_STRING string `json:"DOCUMENT_STRING" string;
 }
 
@@ -72,11 +72,15 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_KYC_FLAG = args[3]
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 	
-	CustomerDataObj.CUSTOMER_DOC[] = args[4]
-
-	fmt.Printf("Input from user:%s\n", CustomerDataObj)
-	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n",CustomerDataObj.CUSTOMER_DOC[])
-
+	customerDocObj []CustomerDataObj.CUSTOMER_DOC = args[4]
+	
+	length := len(customerDocObj)
+	fmt.Printf("***********Length :%s\n", length)
+	for i := 0; i < length; i++ {
+		obj1 := customerDocObj[i]
+		fmt.Printf("**************customerDocObj:%s\n", obj1)
+		}
+		
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
 		return nil, errors.New("Failed to get customer transactions")
