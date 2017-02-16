@@ -1,7 +1,3 @@
-/*
-Copyright Capgemini India. 2016 All Rights Reserved.
-*/
-
 package main
 
 import (
@@ -123,7 +119,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	var objFound bool
 	CustomerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
-		return nil, errors.New("Failed to get Merchant Transactions")
+		return nil, errors.New("Failed to get Customer Records")
 	}
 	var CustomerTxObjects []CustomerData
 	var CustomerTxObjects1 []CustomerData
@@ -134,21 +130,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	if customer_id == "" {
 		res, err := json.Marshal(CustomerTxObjects)
 		if err != nil {
-		return nil, errors.New("Failed to Marshal the required Obj customer_id")
-		}
-		return res, nil
-	}
-	if customer_name == "" {
-		res, err := json.Marshal(CustomerTxObjects)
-		if err != nil {
-		return nil, errors.New("Failed to Marshal the required Obj customer_name")
-		}
-		return res, nil
-	}
-		if customer_dob == "" {
-		res, err := json.Marshal(CustomerTxObjects)
-		if err != nil {
-		return nil, errors.New("Failed to Marshal the required Obj customer_dob")
+		return nil, errors.New("Failed to Marshal the required Obj")
 		}
 		return res, nil
 	}
@@ -157,11 +139,13 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	// iterate
 	for i := 0; i < length; i++ {
 		obj := CustomerTxObjects[i]
-		if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) {
+		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) {
+		
+		//if (obj.CUSTOMER_ID == customer_id){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
-		}
+		//}
 	}
 
 	if objFound {
