@@ -77,14 +77,14 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	
 	var CustomerDocObj []CustomerDoc
 	
-	for(i := 0; i < number_of_docs; i++){
+	for i := 0; i < number_of_docs; i++ {
 		
 		CustomerDocObj[i].DOCUMENT_NAME = args[4]
 		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
 		CustomerDocObj[i].DOCUMENT_STRING = args[5]
 	}
 	
-	CustomerDataObj.CUSTOMER_DOC = CustomerDocObj
+	CustomerDataObj.CUSTOMER_DOC := CustomerDocObj
 	
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
