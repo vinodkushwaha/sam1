@@ -60,7 +60,8 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	var CustomerDataObj CustomerData
 	var CustomerDataList []CustomerData
 	var err error
-
+   	fmt.Printf("********pankaj CUSTOMER_DOC:%d\n", len(args))
+	
 	if len(args) < 4 {
 		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
 	}
