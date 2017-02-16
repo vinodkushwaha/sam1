@@ -16,8 +16,8 @@ type CustomerChaincode struct {
 var customerIndexTxStr = "_customerIndexTxStr"
 
 type CustomerDoc struct {
-    DOCUMENT_NAME string `json:"DOCUMENT_NAME" string;
-	DOCUMENT_STRING string `json:"DOCUMENT_STRING" string;
+    DOCUMENT_NAME string `json:"DOCUMENT_NAME"`
+	DOCUMENT_STRING string `json:"DOCUMENT_STRING"`
 }
 
 type CustomerData struct{
@@ -25,7 +25,7 @@ type CustomerData struct{
 	CUSTOMER_NAME string `json:"CUSTOMER_NAME"`
 	CUSTOMER_DOB string `json:"CUSTOMER_DOB"`
 	CUSTOMER_KYC_FLAG string `json:"CUSTOMER_KYC_FLAG"`
-	CustomerDoc []CUSTOMER_DOC
+	CUSTOMER_DOC []CustomerDoc
 	}
 
 
@@ -61,8 +61,8 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	var CustomerDataList []CustomerData
 	var err error
 
-	if len(args) != 5 {
-		return nil, errors.New("Incorrect number of arguments. Need 5 arguments")
+	if len(args) != 4 {
+		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
 	}
 
 	// Initialize the chaincode
@@ -72,15 +72,20 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_KYC_FLAG = args[3]
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 	
-	customerDocObj []CustomerDataObj.CUSTOMER_DOC = args[4]
+	var number_of_docs int
+	number_of_docs = len((args-4)/2)
 	
-	length := len(customerDocObj)
-	fmt.Printf("***********Length :%s\n", length)
-	for i := 0; i < length; i++ {
-		obj1 := customerDocObj[i]
-		fmt.Printf("**************customerDocObj:%s\n", obj1)
-		}
+	var CustomerDocObj []CustomerDoc
+	
+	for(i := 0; i < number_of_docs; i++){
 		
+		CustomerDocObj[i].DOCUMENT_NAME = args[4]
+		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
+		CustomerDocObj[i].DOCUMENT_STRING = args[5]
+	}
+	
+	CustomerDataObj.CUSTOMER_DOC = CustomerDocObj
+	
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
 		return nil, errors.New("Failed to get customer transactions")
