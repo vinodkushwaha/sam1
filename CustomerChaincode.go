@@ -139,8 +139,14 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	// iterate
 	for i := 0; i < length; i++ {
 		obj := CustomerTxObjects[i]
-		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) {
+		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
+		fmt.Printf("Output from customer_id: %s\n", customer_id)
+		fmt.Printf("Output from obj.CUSTOMER_ID: %s\n", obj.CUSTOMER_ID)
+		fmt.Printf("Output from customer_name: %s\n", customer_name)
+		fmt.Printf("Output from obj.CUSTOMER_NAME: %s\n", obj.CUSTOMER_NAME)
+		fmt.Printf("Output from customer_dob: %s\n", customer_dob)
+		fmt.Printf("Output from obj.CUSTOMER_DOB: %s\n", obj.CUSTOMER_DOB)
 		if ((obj.CUSTOMER_ID) == customer_id){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
