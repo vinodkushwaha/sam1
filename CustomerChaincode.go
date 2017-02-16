@@ -111,7 +111,7 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	var err error
 	var resAsBytes []byte
 
-	if len(args) != 3 {
+	if (len(args) >= 3) {
 		return nil, errors.New("Incorrect number of arguments. Expecting 3 parameters to query")
 	}
 
