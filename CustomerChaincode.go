@@ -90,7 +90,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 		CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 	}
 	
-	CustomerDataObj.CUSTOMER_DOC = CustomerDocObj
+	CustomerDataObj.CUSTOMER_DOC = CustomerDocObjects1
 	
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
