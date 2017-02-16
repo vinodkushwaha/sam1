@@ -76,15 +76,18 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	var number_of_docs int
 	number_of_docs = (len(args)-4)/2
 	
-	var CustomerDocObj := new([]CustomerDoc) 
+	
+	var CustomerDocObjects1 []CustomerDoc
 	
 	for i := 0; i < number_of_docs; i++ {
+		var CustomerDocObj CustomerDoc
 		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
 		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
 		//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[4+(i*2)], DOCUMENT_STRING: args[5+(i*2)]}
-		CustomerDocObj[i].DOCUMENT_NAME = args[4+(i*2)]
-		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-		CustomerDocObj[i].DOCUMENT_STRING = args[5+(i*2)]
+		CustomerDocObj.DOCUMENT_NAME = args[4+(i*2)]
+		//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
+		CustomerDocObj.DOCUMENT_STRING = args[5+(i*2)]
+		CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 	}
 	
 	CustomerDataObj.CUSTOMER_DOC = CustomerDocObj
