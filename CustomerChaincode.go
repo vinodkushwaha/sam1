@@ -98,8 +98,8 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 		return nil, errors.New("Incorrect number of arguments. Expecting 3 parameters to query")
 	}
 
-	customer_name = args[0]
-	customer_id = args[1]
+	customer_id = args[0]
+	customer_name = args[1]
 	customer_dob = args[2]
 
 	resAsBytes, err = t.GetCustomerDetails(stub, customer_name, customer_id, customer_dob)
