@@ -15,12 +15,17 @@ type CustomerChaincode struct {
 
 var customerIndexTxStr = "_customerIndexTxStr"
 
+type CustomerDoc struct {
+    NAME string `json:"NAME" string;
+	DOCUMENT_STRING string `json:"DOCUMENT_STRING" string;
+}
+
 type CustomerData struct{
 	CUSTOMER_ID string `json:"CUSTOMER_ID"`
 	CUSTOMER_NAME string `json:"CUSTOMER_NAME"`
 	CUSTOMER_DOB string `json:"CUSTOMER_DOB"`
 	CUSTOMER_KYC_FLAG string `json:"CUSTOMER_KYC_FLAG"`
-	CUSTOMER_DOC string `json:"CUSTOMER_DOC"`
+	CustomerDoc []CUSTOMER_DOC
 	}
 
 
@@ -65,9 +70,12 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_NAME = args[1]
 	CustomerDataObj.CUSTOMER_DOB = args[2]
 	CustomerDataObj.CUSTOMER_KYC_FLAG = args[3]
-	CustomerDataObj.CUSTOMER_DOC = args[4]
+	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
+	
+	CustomerDataObj.CUSTOMER_DOC[] = args[4]
 
 	fmt.Printf("Input from user:%s\n", CustomerDataObj)
+	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n",CustomerDataObj.CUSTOMER_DOC[])
 
 	customerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
