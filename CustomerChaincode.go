@@ -229,8 +229,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 			objFound = true
 			break;
 		}
-	}
-	else {
+	}else {
 		if ((obj.AADHAR_NUMBER) == AADHAR_NUMBER){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
