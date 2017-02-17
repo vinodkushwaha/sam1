@@ -19,12 +19,47 @@ type CustomerDoc struct {
     DOCUMENT_NAME string `json:"DOCUMENT_NAME"`
 	DOCUMENT_STRING string `json:"DOCUMENT_STRING"`
 }
+type CustomerResidenceAddr struct {
+    RESIDENCE_HOUSE_NO  string `json:"RESIDENCE_HOUSE_NO"`
+	RESIDENCE_STREET_NAME string `json:"RESIDENCE_STREET_NAME"`
+	RESIDENCE_AREA  string `json:"RESIDENCE_AREA"`
+	RESIDENCE_CITY_CODE string `json:"RESIDENCE_CITY_CODE"`
+	RESIDENCE_STATE  string `json:"RESIDENCE_STATE"`
+	RESIDENCE_COUNTRY string `json:"RESIDENCE_COUNTRY"`
+}
+type CustomerPermanentAddr struct {
+    PERMANENT_HOUSE_NO  string `json:"PERMANENT_HOUSE_NO"`
+	PERMANENT_STREET_NAME string `json:"PERMANENT_STREET_NAME"`
+	PERMANENT_AREA  string `json:"PERMANENT_AREA"`
+	PERMANENT_CITY_CODE string `json:"PERMANENT_CITY_CODE"`
+	PERMANENT_STATE  string `json:"PERMANENT_STATE"`
+	PERMANENT_COUNTRY string `json:"PERMANENT_COUNTRY"`
+}
+type CustomerOfficeAddr struct {
+    OFFICE_NAME  string `json:"OFFICE_NAME"`
+	OFFICE_STREET_NAME string `json:"OFFICE_STREET_NAME"`
+	OFFICE_AREA  string `json:"OFFICE_AREA"`
+	OFFICE_CITY_CODE string `json:"OFFICE_CITY_CODE"`
+	OFFICE_STATE  string `json:"OFFICE_STATE"`
+	OFFICE_COUNTRY string `json:"OFFICE_COUNTRY"`
+}
+type CustomerName struct{
+    CUSTOMER_FIRST_NAME  string `json:"CUSTOMER_FIRST_NAME"`
+	CUSTOMER_MIDDLE_NAME string `json:"CUSTOMER_MIDDLE_NAME"`
+	CUSTOMER_LAST_NAME  string `json:"CUSTOMER_LAST_NAME"`
+}
 
 type CustomerData struct{
-	CUSTOMER_ID string `json:"CUSTOMER_ID"`
-	CUSTOMER_NAME string `json:"CUSTOMER_NAME"`
+	CUSTOMER_NAME CustomerName
+	PAN_NUMBER string `json:"PAN_NUMBER"`
+	AADHAR_NUMBER string `json:"AADHAR_NUMBER"`
 	CUSTOMER_DOB string `json:"CUSTOMER_DOB"`
+	CUSTOMER_RESIDENT_STATUS string `json:"RESIDENT_STATUS"`
+	CUSTOMER_KYC_PROCESS_DATE string `json:"CUSTOMER_KYC_PROCESS_DATE"`
 	CUSTOMER_KYC_FLAG string `json:"CUSTOMER_KYC_FLAG"`
+	CUSTOMER_RESIDENCE_ADDR CustomerResidenceAddr
+	CUSTOMER_PERMANENT_ADDR CustomerPermanentAddr
+	CUSTOMER_OFFICE_ADDR CustomerOfficeAddr
 	CUSTOMER_DOC []CustomerDoc
 	}
 
@@ -67,26 +102,51 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	}
 
 	// Initialize the chaincode
-	CustomerDataObj.CUSTOMER_ID = args[0]
-	CustomerDataObj.CUSTOMER_NAME = args[1]
-	CustomerDataObj.CUSTOMER_DOB = args[2]
-	CustomerDataObj.CUSTOMER_KYC_FLAG = args[3]
+	
+	//Code for Name Initialization
+	CustomerDataObj.CustomerName.CUSTOMER_FIRST_NAME = args[0]
+	CustomerDataObj.CustomerName.CUSTOMER_MIDDLE_NAME = args[1]
+	CustomerDataObj.CustomerName.CUSTOMER_LAST_NAME   = args[2]
+	CustomerDataObj.PAN_NUMBER = args[3]
+	CustomerDataObj.AADHAR_NUMBER = args[4]
+	CustomerDataObj.CUSTOMER_DOB = args[5]
+	CustomerDataObj.CUSTOMER_RESIDENT_STATUS = args[6]
+	CustomerDataObj.CUSTOMER_KYC_PROCESS_DATE = args[7]
+	CustomerDataObj.CUSTOMER_KYC_FLAG = args[8]
+	//Code for CustomerResidenceAddr Initialization
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_HOUSE_NO = args[9]
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_STREET_NAME = args[10]
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_AREA   = args[11]
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_CITY_CODE = args[12]
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_STATE = args[13]
+	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_COUNTRY   = args[14]
+	//Code for CustomerPermanentAddr Initialization
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_HOUSE_NO = args[15]
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_STREET_NAME = args[16]
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_AREA   = args[17]
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_CITY_CODE = args[18]
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_STATE = args[19]
+	CustomerDataObj.CustomerPermanentAddr.PERMANENT_COUNTRY   = args[20]
+	//Code for CustomerOfficeAddr Initialization
+	CustomerDataObj.CustomerOfficeAddr.OFFICE_NAME = args[21]
+	CustomerDataObj.CustomerOfficeAddr.OFFICE_STREET_NAME = args[22]
+	CustomerDataObj.CustomerOfficeAddr.OFFICE_AREA   = args[23]
+	CustomerDataObj.CustomerOfficeAddr.OFFICE_CITY_CODE = args[24]
+	CustomerDataObj.CustomerOfficeAddr.PERMANENT_STATE = args[25]
+	CustomerDataObj.CustomerOfficeAddr.OFFICE_COUNTRY   = args[26]
+	//Code for the Document Process	
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
-	
 	var number_of_docs int
-	number_of_docs = (len(args)-4)/2
-	
-	
+	number_of_docs = (len(args)-27)/2
 	var CustomerDocObjects1 []CustomerDoc
-	
 	for i := 0; i < number_of_docs; i++ {
 		var CustomerDocObj CustomerDoc
 		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
 		fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
-		//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[4+(i*2)], DOCUMENT_STRING: args[5+(i*2)]}
-		CustomerDocObj.DOCUMENT_NAME = args[4+(i*2)]
+		//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
+		CustomerDocObj.DOCUMENT_NAME = args[27+(i*2)]
 		//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
-		CustomerDocObj.DOCUMENT_STRING = args[5+(i*2)]
+		CustomerDocObj.DOCUMENT_STRING = args[28+(i*2)]
 		CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
 	}
 	
