@@ -104,9 +104,9 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	// Initialize the chaincode
 	
 	//Code for Name Initialization
-	CustomerDataObj.CustomerName.CUSTOMER_FIRST_NAME = args[0]
-	CustomerDataObj.CustomerName.CUSTOMER_MIDDLE_NAME = args[1]
-	CustomerDataObj.CustomerName.CUSTOMER_LAST_NAME   = args[2]
+	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
+	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
+	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
 	CustomerDataObj.PAN_NUMBER = args[3]
 	CustomerDataObj.AADHAR_NUMBER = args[4]
 	CustomerDataObj.CUSTOMER_DOB = args[5]
@@ -114,26 +114,26 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_KYC_PROCESS_DATE = args[7]
 	CustomerDataObj.CUSTOMER_KYC_FLAG = args[8]
 	//Code for CustomerResidenceAddr Initialization
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_HOUSE_NO = args[9]
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_STREET_NAME = args[10]
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_AREA   = args[11]
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_CITY_CODE = args[12]
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_STATE = args[13]
-	CustomerDataObj.CustomerResidenceAddr.RESIDENCE_COUNTRY   = args[14]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_HOUSE_NO = args[9]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_STREET_NAME = args[10]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_AREA   = args[11]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_CITY_CODE = args[12]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_STATE = args[13]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_COUNTRY   = args[14]
 	//Code for CustomerPermanentAddr Initialization
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_HOUSE_NO = args[15]
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_STREET_NAME = args[16]
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_AREA   = args[17]
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_CITY_CODE = args[18]
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_STATE = args[19]
-	CustomerDataObj.CustomerPermanentAddr.PERMANENT_COUNTRY   = args[20]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_HOUSE_NO = args[15]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_STREET_NAME = args[16]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_AREA   = args[17]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_CITY_CODE = args[18]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_STATE = args[19]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_COUNTRY   = args[20]
 	//Code for CustomerOfficeAddr Initialization
-	CustomerDataObj.CustomerOfficeAddr.OFFICE_NAME = args[21]
-	CustomerDataObj.CustomerOfficeAddr.OFFICE_STREET_NAME = args[22]
-	CustomerDataObj.CustomerOfficeAddr.OFFICE_AREA   = args[23]
-	CustomerDataObj.CustomerOfficeAddr.OFFICE_CITY_CODE = args[24]
-	CustomerDataObj.CustomerOfficeAddr.PERMANENT_STATE = args[25]
-	CustomerDataObj.CustomerOfficeAddr.OFFICE_COUNTRY   = args[26]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_NAME = args[21]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_STREET_NAME = args[22]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_AREA   = args[23]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_CITY_CODE = args[24]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PERMANENT_STATE = args[25]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_COUNTRY   = args[26]
 	//Code for the Document Process	
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 	var number_of_docs int
