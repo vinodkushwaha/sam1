@@ -132,7 +132,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_STREET_NAME = args[22]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_AREA   = args[23]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_CITY_CODE = args[24]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PERMANENT_STATE = args[25]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_STATE = args[25]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_COUNTRY   = args[26]
 	//Code for the Document Process	
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
@@ -171,21 +171,19 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 // Query callback representing the query of a chaincode
 func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function string, args []string) ([]byte, error) {
 
-	var customer_name string // Entities
-	var customer_id string
-	var customer_dob string
+	var PAN_NUMBER string // Entities
+	var AADHAR_NUMBER string
 	var err error
 	var resAsBytes []byte
 
-	if len(args) != 3 {
+	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 3 parameters to query")
 	}
 
-	customer_id = args[0]
-	customer_name = args[1]
-	customer_dob = args[2]
-
-	resAsBytes, err = t.GetCustomerDetails(stub, customer_name, customer_id, customer_dob)
+	PAN_NUMBER = args[0]
+	AADHAR_NUMBER = args[1]
+	
+	resAsBytes, err = t.GetCustomerDetails(stub, PAN_NUMBER, AADHAR_NUMBER)
 
 	fmt.Printf("Query Response:%s\n", resAsBytes)
 
@@ -196,7 +194,7 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	return resAsBytes, nil
 }
 
-func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface, customer_name string, customer_id string, customer_dob string) ([]byte, error) {
+func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface, PAN_NUMBER string, AADHAR_NUMBER string) ([]byte, error) {
 
 	//var requiredObj CustomerData
 	var objFound bool
@@ -210,7 +208,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
 
-	if customer_id == "" {
+	if PAN_NUMBER == "" && AADHAR_NUMBER == ""{
 		res, err := json.Marshal(CustomerTxObjects)
 		if err != nil {
 		return nil, errors.New("Failed to Marshal the required Obj")
@@ -224,17 +222,22 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-		fmt.Printf("Output from customer_id: %s\n", customer_id)
-		fmt.Printf("Output from obj.CUSTOMER_ID: %s\n", obj.CUSTOMER_ID)
-		fmt.Printf("Output from customer_name: %s\n", customer_name)
-		fmt.Printf("Output from obj.CUSTOMER_NAME: %s\n", obj.CUSTOMER_NAME)
-		fmt.Printf("Output from customer_dob: %s\n", customer_dob)
-		fmt.Printf("Output from obj.CUSTOMER_DOB: %s\n", obj.CUSTOMER_DOB)
-		if ((obj.CUSTOMER_ID) == customer_id){
+	if (PAN_NUMBER != ""){
+		if ((obj.PAN_NUMBER) == PAN_NUMBER){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
+			break;
 		}
+	}
+	else {
+		if ((obj.AADHAR_NUMBER) == AADHAR_NUMBER){
+			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+			//requiredObj = obj
+			objFound = true
+			break;
+		}
+	}
 	}
 
 	if objFound {
