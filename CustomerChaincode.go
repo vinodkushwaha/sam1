@@ -20,28 +20,28 @@ type CustomerDoc struct {
 	DOCUMENT_STRING string `json:"DOCUMENT_STRING"`
 }
 type CustomerResidenceAddr struct {
-    RESIDENCE_HOUSE_NO  string `json:"RESIDENCE_HOUSE_NO"`
-	RESIDENCE_STREET_NAME string `json:"RESIDENCE_STREET_NAME"`
-	RESIDENCE_AREA  string `json:"RESIDENCE_AREA"`
-	RESIDENCE_CITY_CODE string `json:"RESIDENCE_CITY_CODE"`
-	RESIDENCE_STATE  string `json:"RESIDENCE_STATE"`
-	RESIDENCE_COUNTRY string `json:"RESIDENCE_COUNTRY"`
+    AddressLine1  string `json: "AddressLine1"`
+	AddressLine2 string `json: "AddressLine2"`
+	City string `json: "City"`
+	Province  string `json: "Province"`
+	Country string `json: "Country"`
+	PostalCode string `json: "PostalCode"`
 }
 type CustomerPermanentAddr struct {
-    PERMANENT_HOUSE_NO  string `json:"PERMANENT_HOUSE_NO"`
-	PERMANENT_STREET_NAME string `json:"PERMANENT_STREET_NAME"`
-	PERMANENT_AREA  string `json:"PERMANENT_AREA"`
-	PERMANENT_CITY_CODE string `json:"PERMANENT_CITY_CODE"`
-	PERMANENT_STATE  string `json:"PERMANENT_STATE"`
-	PERMANENT_COUNTRY string `json:"PERMANENT_COUNTRY"`
+    AddressLine1  string `json: "AddressLine1"`
+	AddressLine2 string `json: "AddressLine2"`
+	City string `json: "City"`
+	Province  string `json: "Province"`
+	Country string `json: "Country"`
+	PostalCode string `json: "PostalCode"`
 }
 type CustomerOfficeAddr struct {
-    OFFICE_NAME  string `json:"OFFICE_NAME"`
-	OFFICE_STREET_NAME string `json:"OFFICE_STREET_NAME"`
-	OFFICE_AREA  string `json:"OFFICE_AREA"`
-	OFFICE_CITY_CODE string `json:"OFFICE_CITY_CODE"`
-	OFFICE_STATE  string `json:"OFFICE_STATE"`
-	OFFICE_COUNTRY string `json:"OFFICE_COUNTRY"`
+    AddressLine1  string `json: "AddressLine1"`
+	AddressLine2 string `json: "AddressLine2"`
+	City string `json: "City"`
+	Province  string `json: "Province"`
+	Country string `json: "Country"`
+	PostalCode string `json: "PostalCode"`
 }
 type CustomerName struct{
     CUSTOMER_FIRST_NAME  string `json:"CUSTOMER_FIRST_NAME"`
@@ -114,26 +114,26 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_KYC_PROCESS_DATE = args[7]
 	CustomerDataObj.CUSTOMER_KYC_FLAG = args[8]
 	//Code for CustomerResidenceAddr Initialization
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_HOUSE_NO = args[9]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_STREET_NAME = args[10]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_AREA   = args[11]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_CITY_CODE = args[12]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_STATE = args[13]
-	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.RESIDENCE_COUNTRY   = args[14]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.AddressLine1 = args[9]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.AddressLine2 = args[10]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.PostalCode   = args[11]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.City = args[12]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.Province = args[13]
+	CustomerDataObj.CUSTOMER_RESIDENCE_ADDR.Country   = args[14]
 	//Code for CustomerPermanentAddr Initialization
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_HOUSE_NO = args[15]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_STREET_NAME = args[16]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_AREA   = args[17]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_CITY_CODE = args[18]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_STATE = args[19]
-	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PERMANENT_COUNTRY   = args[20]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.AddressLine1 = args[15]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.AddressLine2 = args[16]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.PostalCode   = args[17]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.City = args[18]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Province = args[19]
+	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Country   = args[20]
 	//Code for CustomerOfficeAddr Initialization
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_NAME = args[21]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_STREET_NAME = args[22]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_AREA   = args[23]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_CITY_CODE = args[24]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_STATE = args[25]
-	CustomerDataObj.CUSTOMER_OFFICE_ADDR.OFFICE_COUNTRY   = args[26]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.City = args[24]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Province = args[25]
+	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Country   = args[26]
 	//Code for the Document Process	
 	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
 	var number_of_docs int
