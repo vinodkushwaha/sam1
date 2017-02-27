@@ -195,7 +195,11 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	AADHAR_NUMBER = args[1]
 	
 	resAsBytes, err = t.GetCustomerDetails(stub, PAN_NUMBER, AADHAR_NUMBER)
-
+        InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
+        Trace.Println("I have something standard to say")
+        Info.Println("Special Information")
+        Warning.Println("There is something you need to know about")
+        Error.Println("Something has failed")
 	fmt.Printf("Query Response:%s\n", resAsBytes)
 
 	if err != nil {
@@ -289,11 +293,6 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 }
 
 func main() {
-	InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
-        Trace.Println("I have something standard to say")
-        Info.Println("Special Information")
-        Warning.Println("There is something you need to know about")
-        Error.Println("Something has failed")
 	err := shim.Start(new(CustomerChaincode))
 	if err != nil {
 		fmt.Printf("Error starting Customer Simple chaincode: %s", err)
