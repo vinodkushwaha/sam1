@@ -7,6 +7,10 @@ import (
 	"encoding/json"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	//"github.com/golang/protobuf/ptypes/timestamp"
+	"io"
+        "io/ioutil"
+        "log"
+        "os"
 )
 
 // Customer Chaincode implementation
@@ -14,6 +18,13 @@ type CustomerChaincode struct {
 }
 
 var customerIndexTxStr = "_customerIndexTxStr"
+
+var (
+    Trace   *log.Logger
+    Info    *log.Logger
+    Warning *log.Logger
+    Error   *log.Logger
+)
 
 type CustomerDoc struct {
     DOCUMENT_NAME string `json:"DOCUMENT_NAME"`
@@ -194,6 +205,29 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	return resAsBytes, nil
 }
 
+func InitLogs(
+    traceHandle io.Writer,
+    infoHandle io.Writer,
+    warningHandle io.Writer,
+    errorHandle io.Writer) {
+
+    Trace = log.New(traceHandle,
+        "TRACE: ",
+        log.Ldate|log.Ltime|log.Lshortfile)
+
+    Info = log.New(infoHandle,
+        "INFO: ",
+        log.Ldate|log.Ltime|log.Lshortfile)
+
+    Warning = log.New(warningHandle,
+        "WARNING: ",
+        log.Ldate|log.Ltime|log.Lshortfile)
+
+    Error = log.New(errorHandle,
+        "ERROR: ",
+        log.Ldate|log.Ltime|log.Lshortfile)
+}
+
 func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface, PAN_NUMBER string, AADHAR_NUMBER string) ([]byte, error) {
 
 	//var requiredObj CustomerData
@@ -255,6 +289,11 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 }
 
 func main() {
+	InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
+        Trace.Println("I have something standard to say")
+        Info.Println("Special Information")
+        Warning.Println("There is something you need to know about")
+        Error.Println("Something has failed")
 	err := shim.Start(new(CustomerChaincode))
 	if err != nil {
 		fmt.Printf("Error starting Customer Simple chaincode: %s", err)
