@@ -209,7 +209,7 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
         MyFile = log.New(file,
         "PREFIX: ",
         log.Ldate|log.Ltime|log.Lshortfile)
-	
+	MyFile.Println("Special Information in Myfile")
 	fmt.Printf("Query Response:%s\n", resAsBytes)
 
 	if err != nil {
