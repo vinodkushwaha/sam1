@@ -203,12 +203,12 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	
 	file, err := os.OpenFile("file.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
         if err != nil {
-        log.Fatalln("Failed to open log file", output, ":", err)
+        Error.Println("Failed to open log file", output, ":", err)
          }
-
-MyFile = log.New(file,
-    "PREFIX: ",
-    log.Ldate|log.Ltime|log.Lshortfile)
+        MyFile  *log.Logger
+        MyFile = log.New(file,
+        "PREFIX: ",
+        log.Ldate|log.Ltime|log.Lshortfile)
 	
 	fmt.Printf("Query Response:%s\n", resAsBytes)
 
