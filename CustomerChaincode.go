@@ -211,6 +211,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	if err != nil {
 		return nil, err
 	}
+	return nil, nil
 }
 
 
