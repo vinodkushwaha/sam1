@@ -97,8 +97,7 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	
 	return t.UpdateOrRegisterCustomerDetails(stub ,args)
-	
-	return nil, nil
+
 }
 
 func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
