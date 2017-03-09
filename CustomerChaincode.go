@@ -112,6 +112,9 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 	TAX_IDENTIFIER = args[3]
 	UNIQUE_IDENTIFIER = args[4]
 	
+	if (TAX_IDENTIFIER == "" || UNIQUE_IDENTIFIER == ""){
+		return nil, errors.New(" Tax Identifier and Unique Identifier are mandatory")
+	}
 	
 	//var requiredObj CustomerData
 	var objFound bool
@@ -133,25 +136,19 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-	if (TAX_IDENTIFIER != ""){
-		if ((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER){
+		if (((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER)){			
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
 			counter = i
 			break;
+		} 
+		if ((((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) != UNIQUE_IDENTIFIER))||((((obj.TAX_IDENTIFIER) != TAX_IDENTIFIER) && ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER)  ))){
+		return nil, errors.New("Bad Request : Tax Identifier or Unique Identifier mapped for different Customer")
 		}
-	}else {
-		if ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER){
-			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
-			//requiredObj = obj
-			objFound = true
-			counter = i
-			break;
-		}
+	
 	}
-	}
-
+	
 	if objFound {
 		
 		//Update CustomerTxObjects1 with new values from args 
