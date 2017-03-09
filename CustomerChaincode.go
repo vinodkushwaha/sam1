@@ -97,8 +97,9 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
     var err error
-	
+    fmt.Printf("********Invoke Call with args length :%s\n", len(args))
 	if len(args) < 4 {
+	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
 		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
 	}
 	
@@ -260,7 +261,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Province = args[25]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.Country   = args[26]
 	//Code for the Document Process	
-	fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
+	fmt.Printf("********RegisterCustomer CUSTOMER_DOC Proceesing :%s\n", args[4])
 	var number_of_docs int
 	number_of_docs = (len(args)-27)/2
 	var CustomerDocObjects1 []CustomerDoc
@@ -290,7 +291,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	if err != nil {
 		return nil, err
 	}
-	return nil, nil
+	return nil, err
 }
 
 // Query callback representing the query of a chaincode
