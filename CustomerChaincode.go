@@ -138,7 +138,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.City = args[18]
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Province = args[19]
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Country   = args[20]
-	//Code for CustomerOfficeAddr Initialization
+	//Code for CustomerOfficeAddr Initialization 
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
