@@ -406,6 +406,8 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 				objFound = true
 				
 			
+		} else {
+			fmt.Printf("no condition matched\n")
 		}
 	}
 
