@@ -95,10 +95,128 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 
 // Add customer data for the policy
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	if function == customerIndexTxStr {
-		return t.RegisterCustomer(stub, args)
-	}
+	
+	return t.UpdateOrRegisterCustomerDetails(stub ,args)
+	
 	return nil, nil
+}
+
+func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	
+	if len(args) < 4 {
+		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
+	}
+	
+	var PAN_NUMBER string // Entities
+	var AADHAR_NUMBER string
+	PAN_NUMBER = args[3]
+	AADHAR_NUMBER = args[4]
+	
+	
+	//var requiredObj CustomerData
+	var objFound bool
+	CustomerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
+	if err != nil {
+		return nil, errors.New("Failed to get Customer Records")
+	}
+	var CustomerTxObjects []CustomerData
+	var CustomerTxObjects1 []CustomerData
+	json.Unmarshal(CustomerTxsAsBytes, &CustomerTxObjects)
+	length := len(CustomerTxObjects)
+	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
+
+	
+	objFound = false
+	var counter int
+	// iterate
+	for i := 0; i < length; i++ {
+		obj := CustomerTxObjects[i]
+		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
+		
+	if (PAN_NUMBER != ""){
+		if ((obj.PAN_NUMBER) == PAN_NUMBER){
+			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+			//requiredObj = obj
+			objFound = true
+			counter = i
+			break;
+		}
+	}else {
+		if ((obj.AADHAR_NUMBER) == AADHAR_NUMBER){
+			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+			//requiredObj = obj
+			objFound = true
+			counter = i
+			break;
+		}
+	}
+	}
+
+	if objFound {
+		
+		//Update CustomerTxObjects1 with new values from args 
+		
+		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
+		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
+		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
+		CustomerTxObjects[counter].PAN_NUMBER = args[3]
+		CustomerTxObjects[counter].AADHAR_NUMBER = args[4]
+		CustomerTxObjects[counter].CUSTOMER_DOB = args[5]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENT_STATUS = args[6]
+		CustomerTxObjects[counter].CUSTOMER_KYC_PROCESS_DATE = args[7]
+		CustomerTxObjects[counter].CUSTOMER_KYC_FLAG = args[8]
+		//Code for CustomerResidenceAddr Initialization
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.AddressLine1 = args[9]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.AddressLine2 = args[10]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.PostalCode   = args[11]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.City = args[12]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.Province = args[13]
+		CustomerTxObjects[counter].CUSTOMER_RESIDENCE_ADDR.Country   = args[14]
+		//Code for CustomerPermanentAddr Initialization
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.AddressLine1 = args[15]
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.AddressLine2 = args[16]
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.PostalCode   = args[17]
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.City = args[18]
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.Province = args[19]
+		CustomerTxObjects[counter].CUSTOMER_PERMANENT_ADDR.Country   = args[20]
+		//Code for CustomerOfficeAddr Initialization
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.City = args[24]
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.Province = args[25]
+		CustomerTxObjects[counter].CUSTOMER_OFFICE_ADDR.Country   = args[26]
+		//Code for the Document Process	
+		fmt.Printf("********pankaj CUSTOMER_DOC:%s\n", args[4])
+		var number_of_docs int
+		number_of_docs = (len(args)-27)/2
+		var CustomerDocObjects1 []CustomerDoc
+		for i := 0; i < number_of_docs; i++ {
+			var CustomerDocObj CustomerDoc
+			fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",i)
+			fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%d\n",number_of_docs)
+			//CustomerDocObj[i] := CustomerDoc{DOCUMENT_NAME: args[27+(i*2)], DOCUMENT_STRING: args[27+(i*2)]}
+			CustomerDocObj.DOCUMENT_NAME = args[27+(i*2)]
+			//fmt.Printf("********pankaj CustomerDocObj[i].DOCUMENT_NAMEC:%s\n", CustomerDocObj[i].DOCUMENT_NAME)
+			CustomerDocObj.DOCUMENT_STRING = args[28+(i*2)]
+			CustomerDocObjects1 = append(CustomerDocObjects1,CustomerDocObj)
+		}
+		CustomerTxObjects[counter].CUSTOMER_DOC = CustomerDocObjects1
+		
+		jsonAsBytes, _ := json.Marshal(CustomerTxObjects)
+		fmt.Printf("======json print ====:%s\n", jsonAsBytes)
+
+		err = stub.PutState(customerIndexTxStr, jsonAsBytes)
+		if err != nil {
+			return nil, err
+		}
+	    return nil, nil
+	} else{
+		
+		return t.RegisterCustomer(stub ,args)
+	
+	}
+	
 }
 
 func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
@@ -138,7 +256,7 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.City = args[18]
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Province = args[19]
 	CustomerDataObj.CUSTOMER_PERMANENT_ADDR.Country   = args[20]
-	//Code for CustomerOfficeAddr Initialization 
+	//Code for CustomerOfficeAddr Initialization
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine1 = args[21]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.AddressLine2 = args[22]
 	CustomerDataObj.CUSTOMER_OFFICE_ADDR.PostalCode   = args[23]
@@ -301,6 +419,9 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		return res, nil
 	}
 }
+
+
+
 
 func main() {
 	err := shim.Start(new(CustomerChaincode))
