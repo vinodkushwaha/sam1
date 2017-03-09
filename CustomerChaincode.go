@@ -218,7 +218,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 			"PREFIX: ",
 			log.Ldate|log.Ltime|log.Lshortfile)
 		MyFile.Println("Special Information in Myfile")
-		fmt.Printf("Query Response:%s\n", resAsBytes)
+		fmt.Printf("Query Response:%s\n")
 
 		if err != nil {
 			return nil, err
