@@ -102,11 +102,12 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
     var err error
 	
     fmt.Printf("********Invoke Call with args length :%s\n", len(args))
-	if len(args) < 4 {
+	if len(args) < 31 {
 	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
-		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
+		return nil, errors.New("Incorrect number of arguments. Need 31 arguments")
 	}
-		
+	TAX_IDENTIFIER = args[3]
+	UNIQUE_IDENTIFIER = args[4]
 	if (TAX_IDENTIFIER == "" || UNIQUE_IDENTIFIER == ""){
 		return nil, errors.New(" Tax Identifier and Unique Identifier are mandatory")
 	}
@@ -122,8 +123,7 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	json.Unmarshal(CustomerTxsAsBytes, &CustomerTxObjects)
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
-	TAX_IDENTIFIER = args[3]
-	UNIQUE_IDENTIFIER = args[4]
+
 	
 	objFound = false
 	var counter int
