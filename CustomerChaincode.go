@@ -395,9 +395,9 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-		if (((CUSTOMER_FIRST_NAME != "" && (obj.CUSTOMER_FIRST_NAME == CUSTOMER_FIRST_NAME)) || CUSTOMER_FIRST_NAME == "" ) && 
-		((CUSTOMER_MIDDLE_NAME != "" && (obj.CUSTOMER_MIDDLE_NAME == CUSTOMER_MIDDLE_NAME)) || CUSTOMER_MIDDLE_NAME == "" ) && 
-		((CUSTOMER_LAST_NAME != "" && (obj.CUSTOMER_LAST_NAME == CUSTOMER_LAST_NAME)) || CUSTOMER_LAST_NAME == "" ) &&
+		if (((CUSTOMER_FIRST_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_FIRST_NAME == CUSTOMER_FIRST_NAME)) || CUSTOMER_FIRST_NAME == "" ) && 
+		((CUSTOMER_MIDDLE_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME == CUSTOMER_MIDDLE_NAME)) || CUSTOMER_MIDDLE_NAME == "" ) && 
+		((CUSTOMER_LAST_NAME != "" && (obj.CUSTOMER_NAME.CUSTOMER_LAST_NAME == CUSTOMER_LAST_NAME)) || CUSTOMER_LAST_NAME == "" ) &&
 		((CUSTOMER_DOB != "" && (obj.CUSTOMER_DOB == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
 		((TAX_IDENTIFIER != "" && (obj.TAX_IDENTIFIER == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
 		((UNIQUE_IDENTIFIER != "" && (obj.UNIQUE_IDENTIFIER == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )){
