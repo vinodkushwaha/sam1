@@ -99,17 +99,16 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	var TAX_IDENTIFIER string // Entities
 	var UNIQUE_IDENTIFIER string
 
-	var resAsBytes []byte
     var err error
 	
     fmt.Printf("********Invoke Call with args length :%s\n", len(args))
 	if len(args) < 4 {
 	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
-		return resAsBytes, errors.New("Incorrect number of arguments. Need 4 arguments")
+		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
 	}
 		
 	if (TAX_IDENTIFIER == "" || UNIQUE_IDENTIFIER == ""){
-		return resAsBytes, errors.New(" Tax Identifier and Unique Identifier are mandatory")
+		return nil, errors.New(" Tax Identifier and Unique Identifier are mandatory")
 	}
 	
 	//var requiredObj CustomerData
@@ -204,14 +203,16 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		if err != nil {
 			return nil, err
 		}
-	    return resAsBytes, nil
+	    return nil, nil
 	} else{
-		if err != nil {
-		return resAsBytes, err
-	}
+		
 		return t.RegisterCustomer(stub ,args)
 	
 	}
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 
 
