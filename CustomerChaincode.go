@@ -98,10 +98,10 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
     
 	var TAX_IDENTIFIER string // Entities
 	var UNIQUE_IDENTIFIER string
-	TAX_IDENTIFIER = args[3]
-	UNIQUE_IDENTIFIER = args[4]
+
 	var resAsBytes []byte
     var err error
+	
     fmt.Printf("********Invoke Call with args length :%s\n", len(args))
 	if len(args) < 4 {
 	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
@@ -123,7 +123,8 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 	json.Unmarshal(CustomerTxsAsBytes, &CustomerTxObjects)
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
-
+	TAX_IDENTIFIER = args[3]
+	UNIQUE_IDENTIFIER = args[4]
 	
 	objFound = false
 	var counter int
