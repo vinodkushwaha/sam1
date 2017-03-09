@@ -95,12 +95,8 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 
 // Add customer data for the policy
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	
-	return t.UpdateOrRegisterCustomerDetails(stub ,args)
 
-}
 
-func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	
 	if len(args) < 4 {
 		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
@@ -212,8 +208,8 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 		return t.RegisterCustomer(stub ,args)
 	
 	}
-	
 }
+
 
 func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 
