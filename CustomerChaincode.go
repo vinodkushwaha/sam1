@@ -310,7 +310,7 @@ func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function stri
 	var resAsBytes []byte
 
 	if len(args) != 6 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 11 parameters to query")
+		return nil, errors.New("Incorrect number of arguments. Expecting 6 parameters to query")
 	}
 	CUSTOMER_FIRST_NAME= args[0]
 	CUSTOMER_MIDDLE_NAME= args[1]
