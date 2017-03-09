@@ -401,7 +401,8 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		((CUSTOMER_DOB != "" && (obj.CUSTOMER_DOB == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
 		((TAX_IDENTIFIER != "" && (obj.TAX_IDENTIFIER == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
 		((UNIQUE_IDENTIFIER != "" && (obj.UNIQUE_IDENTIFIER == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )
-		){		CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+		){
+				CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 				//requiredObj = obj
 				objFound = true
 				
