@@ -62,8 +62,8 @@ type CustomerName struct{
 
 type CustomerData struct{
 	CUSTOMER_NAME CustomerName
-	PAN_NUMBER string `json:"PAN_NUMBER"`
-	AADHAR_NUMBER string `json:"AADHAR_NUMBER"`
+	TAX_IDENTIFIER string `json:"TAX_IDENTIFIER"`
+	UNIQUE_IDENTIFIER string `json:"UNIQUE_IDENTIFIER"`
 	CUSTOMER_DOB string `json:"CUSTOMER_DOB"`
 	CUSTOMER_RESIDENT_STATUS string `json:"RESIDENT_STATUS"`
 	CUSTOMER_KYC_PROCESS_DATE string `json:"CUSTOMER_KYC_PROCESS_DATE"`
@@ -107,10 +107,10 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
 	}
 	
-	var PAN_NUMBER string // Entities
-	var AADHAR_NUMBER string
-	PAN_NUMBER = args[3]
-	AADHAR_NUMBER = args[4]
+	var TAX_IDENTIFIER string // Entities
+	var UNIQUE_IDENTIFIER string
+	TAX_IDENTIFIER = args[3]
+	UNIQUE_IDENTIFIER = args[4]
 	
 	
 	//var requiredObj CustomerData
@@ -133,8 +133,8 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-	if (PAN_NUMBER != ""){
-		if ((obj.PAN_NUMBER) == PAN_NUMBER){
+	if (TAX_IDENTIFIER != ""){
+		if ((obj.TAX_IDENTIFIER) == TAX_IDENTIFIER){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
@@ -142,7 +142,7 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 			break;
 		}
 	}else {
-		if ((obj.AADHAR_NUMBER) == AADHAR_NUMBER){
+		if ((obj.UNIQUE_IDENTIFIER) == UNIQUE_IDENTIFIER){
 			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
 			//requiredObj = obj
 			objFound = true
@@ -159,8 +159,8 @@ func (t *CustomerChaincode)  UpdateOrRegisterCustomerDetails(stub shim.Chaincode
 		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
 		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
 		CustomerTxObjects[counter].CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
-		CustomerTxObjects[counter].PAN_NUMBER = args[3]
-		CustomerTxObjects[counter].AADHAR_NUMBER = args[4]
+		CustomerTxObjects[counter].TAX_IDENTIFIER = args[3]
+		CustomerTxObjects[counter].UNIQUE_IDENTIFIER = args[4]
 		CustomerTxObjects[counter].CUSTOMER_DOB = args[5]
 		CustomerTxObjects[counter].CUSTOMER_RESIDENT_STATUS = args[6]
 		CustomerTxObjects[counter].CUSTOMER_KYC_PROCESS_DATE = args[7]
@@ -236,8 +236,8 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_FIRST_NAME = args[0]
 	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_MIDDLE_NAME = args[1]
 	CustomerDataObj.CUSTOMER_NAME.CUSTOMER_LAST_NAME   = args[2]
-	CustomerDataObj.PAN_NUMBER = args[3]
-	CustomerDataObj.AADHAR_NUMBER = args[4]
+	CustomerDataObj.TAX_IDENTIFIER = args[3]
+	CustomerDataObj.UNIQUE_IDENTIFIER = args[4]
 	CustomerDataObj.CUSTOMER_DOB = args[5]
 	CustomerDataObj.CUSTOMER_RESIDENT_STATUS = args[6]
 	CustomerDataObj.CUSTOMER_KYC_PROCESS_DATE = args[7]
@@ -300,19 +300,26 @@ func (t *CustomerChaincode)  RegisterCustomer(stub shim.ChaincodeStubInterface, 
 // Query callback representing the query of a chaincode
 func (t *CustomerChaincode) Query(stub shim.ChaincodeStubInterface,function string, args []string) ([]byte, error) {
 
-	var PAN_NUMBER string // Entities
-	var AADHAR_NUMBER string
+    var CUSTOMER_FIRST_NAME  string 
+	var CUSTOMER_MIDDLE_NAME string 
+	var CUSTOMER_LAST_NAME  string 
+	var CUSTOMER_DOB string
+	var TAX_IDENTIFIER string // Entities
+	var UNIQUE_IDENTIFIER string
 	var err error
 	var resAsBytes []byte
 
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 3 parameters to query")
+	if len(args) != 6 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 11 parameters to query")
 	}
-
-	PAN_NUMBER = args[0]
-	AADHAR_NUMBER = args[1]
+	CUSTOMER_FIRST_NAME= args[0]
+	CUSTOMER_MIDDLE_NAME= args[1]
+	CUSTOMER_LAST_NAME = args[2]
+	CUSTOMER_DOB = args[3]
+	TAX_IDENTIFIER = args[4]
+	UNIQUE_IDENTIFIER = args[5]
 	
-	resAsBytes, err = t.GetCustomerDetails(stub, PAN_NUMBER, AADHAR_NUMBER)
+	resAsBytes, err = t.GetCustomerDetails(stub,CUSTOMER_FIRST_NAME,CUSTOMER_MIDDLE_NAME,CUSTOMER_LAST_NAME,CUSTOMER_DOB, TAX_IDENTIFIER, UNIQUE_IDENTIFIER)
         InitLogs(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
         Trace.Println("I have something standard to say")
         Info.Println("Special Information")
@@ -360,7 +367,7 @@ func InitLogs(
         log.Ldate|log.Ltime|log.Lshortfile)
 }
 
-func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface, PAN_NUMBER string, AADHAR_NUMBER string) ([]byte, error) {
+func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface,CUSTOMER_FIRST_NAME string,CUSTOMER_MIDDLE_NAME string,CUSTOMER_LAST_NAME string,CUSTOMER_DOB string, TAX_IDENTIFIER string, UNIQUE_IDENTIFIER string) ([]byte, error) {
 
 	//var requiredObj CustomerData
 	var objFound bool
@@ -374,7 +381,7 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 	length := len(CustomerTxObjects)
 	fmt.Printf("Output from chaincode: %s\n", CustomerTxsAsBytes)
 
-	if PAN_NUMBER == "" && AADHAR_NUMBER == ""{
+	if CUSTOMER_FIRST_NAME == "" && CUSTOMER_MIDDLE_NAME == "" && CUSTOMER_LAST_NAME == "" && CUSTOMER_DOB == "" && TAX_IDENTIFIER == "" && UNIQUE_IDENTIFIER == ""{
 		res, err := json.Marshal(CustomerTxObjects)
 		if err != nil {
 		return nil, errors.New("Failed to Marshal the required Obj")
@@ -388,21 +395,18 @@ func (t *CustomerChaincode)  GetCustomerDetails(stub shim.ChaincodeStubInterface
 		obj := CustomerTxObjects[i]
 		//if ((customer_id == obj.CUSTOMER_ID) && (customer_name == obj.CUSTOMER_NAME) && (customer_dob == obj.CUSTOMER_DOB)) 
 		
-	if (PAN_NUMBER != ""){
-		if ((obj.PAN_NUMBER) == PAN_NUMBER){
-			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
-			//requiredObj = obj
-			objFound = true
-			break;
+		if (((CUSTOMER_FIRST_NAME != "" && (obj.CUSTOMER_FIRST_NAME == CUSTOMER_FIRST_NAME)) || CUSTOMER_FIRST_NAME == "" ) && 
+		((CUSTOMER_MIDDLE_NAME != "" && (obj.CUSTOMER_MIDDLE_NAME == CUSTOMER_MIDDLE_NAME)) || CUSTOMER_MIDDLE_NAME == "" ) && 
+		((CUSTOMER_LAST_NAME != "" && (obj.CUSTOMER_LAST_NAME == CUSTOMER_LAST_NAME)) || CUSTOMER_LAST_NAME == "" ) &&
+		((CUSTOMER_DOB != "" && (obj.CUSTOMER_DOB == CUSTOMER_DOB)) || CUSTOMER_DOB == "" ) &&
+		((TAX_IDENTIFIER != "" && (obj.TAX_IDENTIFIER == TAX_IDENTIFIER)) || TAX_IDENTIFIER == "" ) &&
+		((UNIQUE_IDENTIFIER != "" && (obj.UNIQUE_IDENTIFIER == UNIQUE_IDENTIFIER)) || UNIQUE_IDENTIFIER == "" )
+		){		CustomerTxObjects1 = append(CustomerTxObjects1,obj)
+				//requiredObj = obj
+				objFound = true
+				
+			
 		}
-	}else {
-		if ((obj.AADHAR_NUMBER) == AADHAR_NUMBER){
-			CustomerTxObjects1 = append(CustomerTxObjects1,obj)
-			//requiredObj = obj
-			objFound = true
-			break;
-		}
-	}
 	}
 
 	if objFound {
