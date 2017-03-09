@@ -206,14 +206,12 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		}
 	    return resAsBytes, nil
 	} else{
-		
+		if err != nil {
+		return resAsBytes, err
+	}
 		return t.RegisterCustomer(stub ,args)
 	
 	}
-	if err != nil {
-		return resAsBytes, err
-	}
-	return resAsBytes, nil
 }
 
 
