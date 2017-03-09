@@ -95,28 +95,28 @@ func (t *CustomerChaincode) Init(stub shim.ChaincodeStubInterface, function stri
 
 // Add customer data for the policy
 func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-
-    var err error
-    fmt.Printf("********Invoke Call with args length :%s\n", len(args))
-	if len(args) < 4 {
-	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
-		return nil, errors.New("Incorrect number of arguments. Need 4 arguments")
-	}
-	
+    
 	var TAX_IDENTIFIER string // Entities
 	var UNIQUE_IDENTIFIER string
 	TAX_IDENTIFIER = args[3]
 	UNIQUE_IDENTIFIER = args[4]
-	
+	var resAsBytes []byte
+    var err error
+    fmt.Printf("********Invoke Call with args length :%s\n", len(args))
+	if len(args) < 4 {
+	    fmt.Printf("********Inside Invoke length:%s\n", len(args))
+		return resAsBytes, errors.New("Incorrect number of arguments. Need 4 arguments")
+	}
+		
 	if (TAX_IDENTIFIER == "" || UNIQUE_IDENTIFIER == ""){
-		return nil, errors.New(" Tax Identifier and Unique Identifier are mandatory")
+		return resAsBytes, errors.New(" Tax Identifier and Unique Identifier are mandatory")
 	}
 	
 	//var requiredObj CustomerData
 	var objFound bool
 	CustomerTxsAsBytes, err := stub.GetState(customerIndexTxStr)
 	if err != nil {
-		return nil, errors.New("Failed to get Customer Records")
+		return CustomerTxsAsBytes, errors.New("Failed to get Customer Records")
 	}
 	var CustomerTxObjects []CustomerData
 	var CustomerTxObjects1 []CustomerData
@@ -203,16 +203,16 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		if err != nil {
 			return nil, err
 		}
-	    return nil, nil
+	    return resAsBytes, nil
 	} else{
 		
 		return t.RegisterCustomer(stub ,args)
 	
 	}
 	if err != nil {
-		return nil, err
+		return resAsBytes, err
 	}
-	return nil, nil
+	return resAsBytes, nil
 }
 
 
