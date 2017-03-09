@@ -205,25 +205,12 @@ func (t *CustomerChaincode) Invoke(stub shim.ChaincodeStubInterface, function st
 		}
 	    return nil, nil
 	} else{
-		
+		if err != nil {
+			return nil, err
+		}
 		return t.RegisterCustomer(stub ,args)
 	
 	}
-		file, err := os.OpenFile("file.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-			if err != nil {
-			Error.Println("Failed to open log file : ", err)
-			 }
-			var MyFile  *log.Logger
-			MyFile = log.New(file,
-			"PREFIX: ",
-			log.Ldate|log.Ltime|log.Lshortfile)
-		MyFile.Println("Special Information in Myfile")
-		fmt.Printf("Query Response:%s\n")
-
-		if err != nil {
-			return nil, err
-	}
-	return nil, nil
 }
 
 
